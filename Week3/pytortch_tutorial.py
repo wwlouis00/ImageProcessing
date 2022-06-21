@@ -83,8 +83,8 @@ def train(epoch):
         optimizer.zero_grad() #梯度歸0
         output = network(data)
         loss = F.nll_loss(output, target)
-        loss.backward()
-        optimizer.step()
+        loss.backward() #反向計算每個參數的梯度值
+        optimizer.step() #執行優化，通過梯度下降來更新參數的值，
         if batch_idx % log_interval == 0:
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(epoch, batch_idx * len(data),
                                                                            len(train_loader.dataset),
