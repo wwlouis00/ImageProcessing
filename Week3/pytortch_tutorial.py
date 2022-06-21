@@ -1,9 +1,9 @@
 import torch
-import torchvision
-from torch.utils.data import DataLoader
+import torchvision #結構和圖片轉換功能
+from torch.utils.data import DataLoader # 包裝數據和tensor數據集
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.optim as optim
+import torch.optim as optim #優化演算法
 import matplotlib.pyplot as plt
  
 n_epochs = 3
@@ -80,7 +80,7 @@ test_counter = [i * len(train_loader.dataset) for i in range(n_epochs + 1)]
 def train(epoch):
     network.train()
     for batch_idx, (data, target) in enumerate(train_loader):
-        optimizer.zero_grad()
+        optimizer.zero_grad() #梯度歸0
         output = network(data)
         loss = F.nll_loss(output, target)
         loss.backward()
