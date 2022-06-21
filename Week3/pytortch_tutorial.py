@@ -142,7 +142,6 @@ for i in range(6):
 plt.show()
  
  
-# ----------------------------------------------------------- #
  
 continued_network = Net()
 continued_optimizer = optim.SGD(network.parameters(), lr=learning_rate, momentum=momentum)
