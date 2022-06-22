@@ -31,7 +31,16 @@ test_loader = torch.utils.data.DataLoader(
                                        (0.1307,), (0.3081,))
                                ])),
     batch_size=batch_size_test, shuffle=True)
- 
+
+# val_loader = torch.utils.data.DataLoader(
+#     torchvision.datasets.MNIST('./data/', train=False, download=True,
+#                                transform=torchvision.transforms.Compose([
+#                                    torchvision.transforms.ToTensor(),
+#                                    torchvision.transforms.Normalize(
+#                                        (0.1307,), (0.3081,))
+#                                ])),
+#     batch_size=batch_size_test, shuffle=True)
+
 examples = enumerate(test_loader)
 batch_idx, (example_data, example_targets) = next(examples)
 # print(example_targets)
@@ -79,6 +88,7 @@ test_counter = [i * len(train_loader.dataset) for i in range(n_epochs + 1)]
  
 def train(epoch):
     network.train()
+    train_loss = 0
     for batch_idx, (data, target) in enumerate(train_loader):
         optimizer.zero_grad() #把所有可學習參數梯度歸0
         output = network(data)
@@ -94,6 +104,7 @@ def train(epoch):
             train_counter.append((batch_idx * 64) + ((epoch - 1) * len(train_loader.dataset)))
             torch.save(network.state_dict(), './model.pth')
             torch.save(optimizer.state_dict(), './optimizer.pth')
+    # return train_loss    
  
 def test():
     network.eval()
@@ -144,7 +155,7 @@ plt.show()
  
  
 continued_network = Net()
-continued_optimizer = optim.SGD(network.parameters(), lr=learning_rate, momentum=momentum)
+continued_optimizer = optim.SGD(network.parameters(), lr=learning_rate, momentum=momentum) #訓練時間縮短
  
 network_state_dict = torch.load('model.pth')
 continued_network.load_state_dict(network_state_dict)
