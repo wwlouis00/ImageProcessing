@@ -80,7 +80,7 @@ test_counter = [i * len(train_loader.dataset) for i in range(n_epochs + 1)]
 def train(epoch):
     network.train()
     for batch_idx, (data, target) in enumerate(train_loader):
-        optimizer.zero_grad() #梯度歸0
+        optimizer.zero_grad() #把所有可學習參數梯度歸0
         output = network(data)
         loss = F.nll_loss(output, target)
         loss.backward() #反向計算每個參數的梯度值
@@ -111,7 +111,7 @@ def test():
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
   
-train(1)
+train(1) #訓練1期
 test()
 
 for epoch in range(1, n_epochs + 1):
